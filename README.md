@@ -16,7 +16,7 @@ While the approach works great, we found some limitations and itches with it:
 the moment the configuration key is required.
 
 * Accessing configuration values through the ruby `ENV` hash is a bit
-  cumbersome.
+  cumbersome, and does not provide typecasting.
 
 There are some gems already out there that solve these, but none of them fixed
 them how we wanted them to. See the similarities section bellow.
@@ -25,7 +25,8 @@ them how we wanted them to. See the similarities section bellow.
 environment checker that runs before initializers and environments have been
 run, checking that the environment contains all the required values. It also
 exposes ENV values through the native rails config API so you can do
-`Rails.config.mandril_api_key` instead of `ENV['MANDRIL_API_KEY']`.
+`Rails.config.mandril_api_key` instead of `ENV['MANDRIL_API_KEY']`, applying
+typecasting as required.
 
 ## Usage
 
@@ -43,20 +44,9 @@ Run bundle to install the engine:
 > bundle install
 ~~~
 
-Run our rake task to create the configuration file where you will setup your
-environment requirements:
+### Using rails
 
-~~~
-> rake greenpeace:install
-~~~
-
-Done! Now you can edit your environment configuration file at
-`config/greenpeace.rb` to have **Greenpeace** check your environment
-automatically on startup.
-
-### Configuration
-
-You need to setup your environment requirements by editing the
+You need to setup your environment requirements by creating and editing a
 `config/greenpeace.rb` file. The ruby script uses a simple API to define what
 you require in your environment:
 
@@ -67,10 +57,10 @@ Greenpeace.configure do |env|
 
   # You can mark a key as an optional value, with a default if it is not
   # defined.
-  env.may_have 'USE_GOOGLE_ANALYTICS', default: false
+  env.may_have 'USE_GOOGLE_ANALYTICS', default: "false"
 
   # You can mark required or optional keys to be converted to a type when
-  # reading the values.
+  # reading the values. Valid types are :string and :int
   env.requires 'PORT', type: :int
   env.may_have 'API_TIMEOUT', type: :int, default: 30
 
@@ -82,8 +72,6 @@ Greenpeace.configure do |env|
 end
 ~~~
 
-### Usage
-
 Once you configured the environment requirements, the engine will automatically
 check the environment on startup and raise exceptions if something is not
 correctly configured. In addition to this, you can now access the configured
@@ -91,6 +79,28 @@ keys through the rails built-in configuration API:
 
 ~~~ruby
   if Rails.config.use_google_analytics
+    # ...
+  end
+~~~
+
+### Using something else
+
+See the previous section to get a general idea on how everything works.
+
+Done? Well, the difference when you are not using rails is that you need to
+manually require your `config/greenpeace.rb` file to have the environment
+checked and sanitized. For example, you could do something like this:
+
+~~~ruby
+  require "greenpeace"
+  require "config/greenpeace"
+~~~
+
+After that, you can access the configuration options directly on
+`Greenpeace.env`. For example:
+
+~~~ruby
+  if Greenpeace.env.use_google_analytics
     # ...
   end
 ~~~
