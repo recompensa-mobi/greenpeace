@@ -9,7 +9,7 @@ module Greenpeace
     @@env = Greenpeace::Environment.new(configuration)
   end
 
-  def env
+  def self.env
     @@env
   end
 end
