@@ -6,10 +6,6 @@ module Greenpeace
       if File.exists?(path)
         require path
       end
-
-      Greenpeace.env.values.each do |key, value|
-        config.send("#{key}=", value)
-      end
     end
   end
 end

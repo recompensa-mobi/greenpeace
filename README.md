@@ -22,11 +22,10 @@ There are some gems already out there that solve these, but none of them fixed
 them how we wanted them to. See the similarities section bellow.
 
 **Greenpeace** solves this in a simple, straightforward way. It is an
-environment checker that runs before initializers and environments have been
-run, checking that the environment contains all the required values. It also
-exposes ENV values through the native rails config API so you can do
-`Rails.config.mandril_api_key` instead of `ENV['MANDRIL_API_KEY']`, applying
-typecasting as required.
+environment checker that runs before initializers and environments, checking
+that the environment contains all the required values. It also exposes ENV
+values through a simple config API so you can do `Greenpeace.env.port` instead
+of `ENV['PORT'].to_i`, applying typecasting as required.
 
 ## Usage
 
@@ -44,7 +43,7 @@ Run bundle to install the engine:
 > bundle install
 ~~~
 
-### Using rails
+### Using it with rails
 
 You need to setup your environment requirements by creating and editing a
 `config/greenpeace.rb` file. The ruby script uses a simple API to define what
@@ -75,10 +74,10 @@ end
 Once you configured the environment requirements, the engine will automatically
 check the environment on startup and raise exceptions if something is not
 correctly configured. In addition to this, you can now access the configured
-keys through the rails built-in configuration API:
+keys through a simple API:
 
 ~~~ruby
-  if Rails.config.use_google_analytics
+  if Greenpeace.env.use_google_analytics
     # ...
   end
 ~~~
@@ -96,14 +95,8 @@ checked and sanitized. For example, you could do something like this:
   require "config/greenpeace"
 ~~~
 
-After that, you can access the configuration options directly on
-`Greenpeace.env`. For example:
-
-~~~ruby
-  if Greenpeace.env.use_google_analytics
-    # ...
-  end
-~~~
+After that, you can use the `Greenpeace.env` configuration API as you would in
+a rails project.
 
 ## License
 
