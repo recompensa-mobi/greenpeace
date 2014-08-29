@@ -17,5 +17,5 @@ Gem::Specification.new do |s|
   s.files = Dir["{lib}/**/*", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_development_dependency "rails", "~> 4.1.4"
+  s.add_development_dependency "rails", "~> 4.0"
 end
