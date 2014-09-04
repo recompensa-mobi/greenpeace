@@ -9,15 +9,15 @@ module Greenpeace::Configuration
     end
 
     def to_s
-      @key
+      @key.to_s
     end
 
     def identifier
-      @key.downcase
+      @key.to_s
     end
 
     def env_identifier
-      @key
+      @key.to_s.upcase
     end
 
     protected
@@ -28,7 +28,7 @@ module Greenpeace::Configuration
     private
     def validate_key(key)
       raise "Key cannot be nil" if key.nil?
-      raise "Key #{key} must be a string, but was a #{key.class}" unless key.is_a? String
+      raise "Key #{key} must be a symbol, but was a #{key.class}" unless key.is_a? Symbol
       raise "Key cannot be blank" if key.empty?
       key
     end

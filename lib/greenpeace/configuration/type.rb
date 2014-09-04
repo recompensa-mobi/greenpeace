@@ -10,7 +10,7 @@ module Greenpeace::Configuration
       int: {
         converter: :to_i,
         typeclass: Integer,
-        regexp: /\d+/
+        regexp: /^\d+$/
       },
     }
 
@@ -23,7 +23,7 @@ module Greenpeace::Configuration
     end
 
     def convert(value)
-      unless value.match(type_descriptor[:regexp])
+      unless value.nil? || value.match(type_descriptor[:regexp])
         raise "Value #{value} is supposed to be a #{@type}"
       end
 

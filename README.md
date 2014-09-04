@@ -1,6 +1,6 @@
 # Greenpeace
 
-**Greenpeace** is a small environment checker for rails [12 factor
+**Greenpeace** is a small environment checker for [12 factor
 apps](http://12factor.net/config).
 
 ## Why?
@@ -22,10 +22,10 @@ There are some gems already out there that solve these, but none of them fixed
 them how we wanted them to. See the similarities section bellow.
 
 **Greenpeace** solves this in a simple, straightforward way. It is an
-environment checker that runs before initializers and environments, checking
-that the environment contains all the required values. It also exposes ENV
-values through a simple config API so you can do `Greenpeace.env.port` instead
-of `ENV['PORT'].to_i`, applying typecasting as required.
+environment checker that runs checking that the environment contains all the
+required values. It also exposes ENV values through a simple configuration API
+so you can do `Greenpeace.env.port` instead of `ENV['PORT'].to_i`, applying
+typecasting as required.
 
 ## Usage
 
@@ -43,11 +43,15 @@ Run bundle to install the engine:
 > bundle install
 ~~~
 
-### Using it with rails
+### Usage
 
-You need to setup your environment requirements by creating and editing a
-`config/greenpeace.rb` file. The ruby script uses a simple API to define what
-you require in your environment:
+You need to setup your environment in a ruby file of your liking. If you are
+using rails, the gem automatically loads a file at `config/greenpeace.rb` where
+you should configure your requirements using the provided API. Otherwise, put
+those requirements somewhere and ensure they are run before starting your
+application.
+
+The API is declarative and quite simple to read and write:
 
 ~~~ruby
 Greenpeace.configure do |env|
@@ -71,32 +75,16 @@ Greenpeace.configure do |env|
 end
 ~~~
 
-Once you configured the environment requirements, the engine will automatically
-check the environment on startup and raise exceptions if something is not
-correctly configured. In addition to this, you can now access the configured
-keys through a simple API:
+Whenever the `configure` method is called (which is done automatically on
+rails), Greenpeace will check the environment and raise exceptions if something
+is not correctly configured. In addition to this, you can now access the
+configured keys through a simple API:
 
 ~~~ruby
   if Greenpeace.env.use_google_analytics
     # ...
   end
 ~~~
-
-### Using something else
-
-See the previous section to get a general idea on how everything works.
-
-Done? Well, the difference when you are not using rails is that you need to
-manually require your `config/greenpeace.rb` file to have the environment
-checked and sanitized. For example, you could do something like this:
-
-~~~ruby
-  require "greenpeace"
-  require "config/greenpeace"
-~~~
-
-After that, you can use the `Greenpeace.env` configuration API as you would in
-a rails project.
 
 ## License
 

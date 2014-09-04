@@ -10,12 +10,14 @@ Gem::Specification.new do |s|
   s.authors     = ["Andres Arana"]
   s.email       = ["andres.arana@recompensa.mobi"]
   s.homepage    = "https://github.com/recompensa-mobi/greenpeace"
-  s.summary     = "Rails engine which checks and sanitizes your environment variables."
-  s.description = "Rails engine which checks and sanitizes you environment variables, raising exception if required variables are not configured, type-casting non-string variables and exposing them using the standard rails configuration API."
+  s.summary     = "Check and sanitize your environment variables."
+  s.description = "Library which allows you to check and sanitize you environment variables, raising exception if required variables are not configured, type-casting non-string variables and exposing them using an idiomatic API."
   s.license     = "MIT"
 
-  s.files = Dir["{lib}/**/*", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
+  s.files = Dir["{lib}/**/*", "README.md"]
+  s.test_files = Dir["spec/**/*"]
 
-  s.add_development_dependency "rails", "~> 4.0"
+  s.add_development_dependency "bundler"
+  s.add_development_dependency "rake"
+  s.add_development_dependency "rspec"
 end
