@@ -22,9 +22,9 @@ There are some gems already out there that solve these, but none of them fixed
 them how we wanted them to. See the similarities section bellow.
 
 **Greenpeace** solves this in a simple, straightforward way. It is an
-environment checker that runs checking that the environment contains all the
-required values. It also exposes ENV values through a simple configuration API
-so you can do `Greenpeace.env.port` instead of `ENV['PORT'].to_i`, applying
+environment checker that checks that the environment contains all the required
+values. It also exposes ENV values through a simple configuration API so you
+can do `Greenpeace.env.port` instead of `ENV['PORT'].to_i`, applying
 typecasting as required.
 
 ## Usage
@@ -56,20 +56,20 @@ The API is declarative and quite simple to read and write:
 ~~~ruby
 Greenpeace.configure do |env|
   # You can mark a key to be required for boot.
-  env.requires 'DATABASE_URL'
+  env.requires :database_url
 
   # You can mark a key as an optional value, with a default if it is not
   # defined.
-  env.may_have 'USE_GOOGLE_ANALYTICS', default: "false"
+  env.may_have :google_analytics_account, default: "UA-xxxxx"
 
   # You can mark required or optional keys to be converted to a type when
   # reading the values. Valid types are :string and :int
-  env.requires 'PORT', type: :int
-  env.may_have 'API_TIMEOUT', type: :int, default: 30
+  env.requires :port, type: :int
+  env.may_have :api_timeout, type: :int, default: 30
 
   # You can add an optional message which describes what the key is about, for
   # documenting configuration options. This documentation string is used when
-  # raising and initialization exception if the key is not found, or if the
+  # raising an initialization exception if the key is not found, or if the
   # type is not correct.
   env.requires 'API_KEY', doc: "API key for the Frumboloizer service"
 end

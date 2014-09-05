@@ -1,3 +1,4 @@
+require "spec_helper"
 require "greenpeace/configuration/option"
 
 describe Greenpeace::Configuration::Option do
@@ -5,10 +6,6 @@ describe Greenpeace::Configuration::Option do
     Greenpeace::Configuration::Option.new(
       :key,
       type: :int, doc: "DOC", default: 5)
-  end
-
-  def set_env_value(value)
-    ENV['KEY'] = value
   end
 
   describe "#identifier" do
