@@ -5,12 +5,8 @@ module Greenpeace
     def initialize(config)
       @values = {}
 
-      config.requirements.each do |requirement|
-        @values[requirement.identifier] = requirement.value
-      end
-
-      config.options.each do |option|
-        @values[option.identifier] = option.value
+      config.settings.each do |setting|
+        @values[setting.identifier] = setting.value
       end
     end
 

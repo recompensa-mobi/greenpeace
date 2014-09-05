@@ -1,3 +1,8 @@
+require "greenpeace/configuration/key"
+require "greenpeace/configuration/type"
+require "greenpeace/configuration/doc"
+require "greenpeace/configuration/default"
+
 module Greenpeace::Configuration
   class Option
     attr_reader :key
