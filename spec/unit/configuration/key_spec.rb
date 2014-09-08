@@ -1,3 +1,4 @@
+require "spec_helper"
 require "greenpeace/configuration/key"
 
 describe Greenpeace::Configuration::Key do

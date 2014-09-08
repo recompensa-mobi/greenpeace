@@ -1,3 +1,4 @@
+require "spec_helper"
 require "greenpeace/configuration/doc"
 
 describe Greenpeace::Configuration::Doc do

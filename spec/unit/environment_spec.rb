@@ -1,3 +1,4 @@
+require "spec_helper"
 require "greenpeace/environment"
 
 describe Greenpeace::Environment do

@@ -1,3 +1,4 @@
+require "spec_helper"
 require "greenpeace/configuration/default"
 
 describe Greenpeace::Configuration::Default do
