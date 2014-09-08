@@ -6,15 +6,17 @@ require "greenpeace/configuration/default"
 module Greenpeace::Configuration
   class Option
     attr_reader :key
-    attr_reader :type
-    attr_reader :doc
-    attr_reader :default
 
-    def initialize(key, options)
+    def initialize(key, options, environment)
+      @environment = environment
       @key = Greenpeace::Configuration::Key.new(key)
       @type = Greenpeace::Configuration::Type.new(options, :type)
       @doc = Greenpeace::Configuration::Doc.new(options, :doc)
-      @default = Greenpeace::Configuration::Default.new(@type, options, :default)
+      @default = Greenpeace::Configuration::Default.new(
+        @type,
+        options,
+        :default,
+        :defaults)
     end
 
     def identifier
@@ -24,7 +26,7 @@ module Greenpeace::Configuration
     def value
       value = ENV[@key.env_identifier]
       if value.nil? or value.empty?
-        @default.value
+        @default.value(@environment)
       else
         @type.convert(value)
       end

@@ -9,35 +9,30 @@ module Greenpeace::Configuration
   class Config
     attr_reader :settings
 
-    def initialize
+    def initialize(environment = "")
       @settings = []
+      @environment = environment
     end
 
     def requires(key, options={})
-      requirement = Greenpeace::Configuration::Requirement.new(key, options)
+      requirement = Greenpeace::Configuration::Requirement.new(
+        key,
+        options,
+        @environment)
+
       add_setting_uniquely(requirement)
     end
 
     def may_have(key, options={})
-      option = Greenpeace::Configuration::Option.new(key, options)
+      option = Greenpeace::Configuration::Option.new(
+        key,
+        options,
+        @environment)
+
       add_setting_uniquely(option)
     end
 
     private
-    def add_requirement(requirement)
-      if key_already_defined?(requirement.key)
-        raise "Requirement key #{requirement.key} must be uniquely defined"
-      end
-      @requirements << requirement
-    end
-
-    def add_option(option)
-      if key_already_defined?(option.key)
-        raise "Option key #{option.key} must be uniquely defined"
-      end
-      @options << option
-    end
-
     def add_setting_uniquely(setting)
       if key_already_defined?(setting.key)
         raise "Duplicated configuration key #{setting.key}"

@@ -5,7 +5,8 @@ describe Greenpeace::Configuration::Option do
   subject do
     Greenpeace::Configuration::Option.new(
       :key,
-      type: :int, doc: "DOC", default: 5)
+      {type: :int, doc: "DOC", default: 5},
+      "development")
   end
 
   describe "#identifier" do
