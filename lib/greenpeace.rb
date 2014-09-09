@@ -1,4 +1,5 @@
-require "greenpeace/railtie" if defined?(Rails)
+require "greenpeace/railtie"
+require "greenpeace/version"
 require "greenpeace/configuration/config"
 require "greenpeace/environment"
 
@@ -7,10 +8,6 @@ module Greenpeace
     configuration = Greenpeace::Configuration::Config.new(environment)
     yield configuration
     @@env = Greenpeace::Environment.new(configuration)
-  end
-
-  def self.clean!
-    @@env = nil
   end
 
   def self.env
