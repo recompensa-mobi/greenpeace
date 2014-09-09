@@ -1,36 +1,41 @@
-module Greenpeace::Configuration
-  class Key
-    def initialize(key)
-      @key = validate_key(key)
-    end
+module Greenpeace
+  module Configuration
+    # Represents an environment key in a configuration entry
+    class Key
+      def initialize(key)
+        @key = validate_key(key)
+      end
 
-    def ==(other)
-      other.raw_key == raw_key
-    end
+      def ==(other)
+        other.key == @key
+      end
 
-    def to_s
-      @key.to_s
-    end
+      def to_s
+        @key.to_s
+      end
 
-    def identifier
-      @key.to_s
-    end
+      def identifier
+        @key.to_s
+      end
 
-    def env_identifier
-      @key.to_s.upcase
-    end
+      def env_identifier
+        @key.to_s.upcase
+      end
 
-    protected
-    def raw_key
-      @key
-    end
+      protected
 
-    private
-    def validate_key(key)
-      raise "Key cannot be nil" if key.nil?
-      raise "Key #{key} must be a symbol, but was a #{key.class}" unless key.is_a? Symbol
-      raise "Key cannot be blank" if key.empty?
-      key
+      attr_reader :key
+
+      private
+
+      def validate_key(key)
+        fail 'Key cannot be nil' if key.nil?
+        unless key.is_a? Symbol
+          fail "Key #{key} must be a symbol, but was a #{key.class}"
+        end
+        fail 'Key cannot be blank' if key.empty?
+        key
+      end
     end
   end
 end

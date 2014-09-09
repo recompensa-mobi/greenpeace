@@ -1,4 +1,5 @@
 module Greenpeace
+  # Environment accessor object
   class Environment
     attr_reader :values
 
@@ -12,7 +13,7 @@ module Greenpeace
 
     def method_missing(method)
       value = method.to_s
-      if @values.has_key?(value)
+      if @values.key?(value)
         @values[value]
       else
         super

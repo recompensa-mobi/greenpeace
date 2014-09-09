@@ -1,19 +1,22 @@
-module Greenpeace::Configuration
-  class Doc
+module Greenpeace
+  module Configuration
+    # Represents a doc configuration in a requirement
+    class Doc
+      def initialize(options, key)
+        @doc = options.key?(key) ? validate_doc(options[key]) : 'Undefined'
+      end
 
-    def initialize(options, key)
-      @doc = options.has_key?(key) ? validate_doc(options[key]) : "Undefined"
-    end
+      def to_s
+        @doc
+      end
 
-    def to_s
-      @doc
-    end
+      private
 
-    private
-    def validate_doc(doc)
-      raise "Doc cannot be nil" if doc.nil?
-      raise "Doc must be a string" unless doc.is_a?(String)
-      doc
+      def validate_doc(doc)
+        fail 'Doc cannot be nil' if doc.nil?
+        fail 'Doc must be a string' unless doc.is_a?(String)
+        doc
+      end
     end
   end
 end
