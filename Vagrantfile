@@ -38,9 +38,12 @@ Vagrant.configure('2') do |config|
 
       rvm: {
         user_installs: [{
-          user: 'vagrant',
-          default_ruby: '2.1.1'
-        }]
+          user: "vagrant",
+          default_ruby: "2.1.2",
+        }],
+        vagrant: {
+          system_chef_solo: '/usr/bin/chef-solo'
+        }
       }
     }
 
@@ -49,6 +52,5 @@ Vagrant.configure('2') do |config|
     chef.add_recipe 'rvm::user'
     chef.add_recipe 'rvm::vagrant'
     chef.add_recipe 'nfs'
-    chef.add_recipe 'nodejs'
   end
 end
