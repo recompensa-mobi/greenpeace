@@ -38,8 +38,8 @@ Vagrant.configure('2') do |config|
 
       rvm: {
         user_installs: [{
-          user: "vagrant",
-          default_ruby: "2.1.2",
+          user: 'vagrant',
+          default_ruby: '2.1.2'
         }],
         vagrant: {
           system_chef_solo: '/usr/bin/chef-solo'
